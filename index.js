@@ -33,6 +33,9 @@ async function saveTmpFile(content) {
 
 export default defineComponent({
     async run({ steps, $ }) {
+        // TODO make all of this dynamic - waiting for access
+        // base id & table will be fetched via meta data after I got access
+        // https://airtable.com/api/meta
         const table = await getTable(BASE_ID, 'Main')
         const csv = await tableToCSV(table)
         return await saveTmpFile(csv)
