@@ -1,7 +1,6 @@
-const fs = require('fs')
-const { file } = require('tmp-promise')
-require('dotenv').config()
-const Axios = require('axios')
+import fs from 'fs'
+import { file } from 'tmp-promise'
+import Axios from 'axios'
 
 const { AIRTABLE_API_KEY: API_KEY, TEST_AIRTABLE_BASE_ID: BASE_ID } = process.env
 
@@ -32,13 +31,10 @@ async function saveTmpFile(content) {
     return csvPath
 }
 
-async function main() {
-    // TODO make all of this dynamic - waiting for access
-    // base id & table will be fetched via meta data after I got access
-    // https://airtable.com/api/meta
-    const table = await getTable(BASE_ID, 'Main')
-    const csv = await tableToCSV(table)
-    return await saveTmpFile(csv)
-}
-
-main ()
+export default defineComponent({
+    async run({ steps, $ }) {
+        const table = await getTable(BASE_ID, 'Main')
+        const csv = await tableToCSV(table)
+        return await saveTmpFile(csv)
+    },
+})
